@@ -1,0 +1,7 @@
+E:\repo\SimpleDelegate\SimpleDelegate\bin\Debug\SimpleDelegate.exe.config
+E:\repo\SimpleDelegate\SimpleDelegate\bin\Debug\SimpleDelegate.exe
+E:\repo\SimpleDelegate\SimpleDelegate\bin\Debug\SimpleDelegate.pdb
+E:\repo\SimpleDelegate\SimpleDelegate\obj\Debug\SimpleDelegate.csprojAssemblyReference.cache
+E:\repo\SimpleDelegate\SimpleDelegate\obj\Debug\SimpleDelegate.csproj.CoreCompileInputs.cache
+E:\repo\SimpleDelegate\SimpleDelegate\obj\Debug\SimpleDelegate.exe
+E:\repo\SimpleDelegate\SimpleDelegate\obj\Debug\SimpleDelegate.pdb
