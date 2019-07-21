@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AutoLotClient")]
+[assembly: AssemblyTitle("AutoLotTestDrive")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AutoLotClient")]
+[assembly: AssemblyProduct("AutoLotTestDrive")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("51982364-0a43-4bf6-8492-d7579649a16a")]
+[assembly: Guid("4671b0ea-605c-4afd-a614-a02ce8767990")]
 
 // Version information for an assembly consists of the following four values:
 //

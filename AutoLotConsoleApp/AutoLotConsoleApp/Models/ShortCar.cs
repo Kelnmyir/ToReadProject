@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoLotDAL.Models
+namespace AutoLotConsoleApp.Models
 {
-    public class Car
+    class ShortCar
     {
         public int CarID { get; set; }
-        public string Color { get; set; }
         public string Make { get; set; }
-        public string PetName { get; set; }
+        public override string ToString()
+        {
+            return $"{this.Make} with ID {this.CarID}.";
+        }
     }
 }

@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D56BCE4F-24BD-4A15-87D1-154856E175D8}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoLotDAL</RootNamespace>
-    <AssemblyName>AutoLotDAL</AssemblyName>
+    <ProjectGuid>{4671B0EA-605C-4AFD-A614-A02CE8767990}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>AutoLotTestDrive</RootNamespace>
+    <AssemblyName>AutoLotTestDrive</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,12 +24,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AutoLotTestDrive.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -48,40 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EF\AutoLotEntities.cs" />
-    <Compile Include="EF\MyDataInitializer.cs" />
-    <Compile Include="Interception\ConsoleWriterInterceptor.cs" />
-    <Compile Include="Migrations\201907181418181_Initial.cs" />
-    <Compile Include="Migrations\201907181418181_Initial.Designer.cs">
-      <DependentUpon>201907181418181_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907181444314_Final.cs" />
-    <Compile Include="Migrations\201907181444314_Final.Designer.cs">
-      <DependentUpon>201907181444314_Final.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Base\EntityBase.cs" />
-    <Compile Include="Models\Inventory.cs" />
-    <Compile Include="Models\InventoryPartial.cs" />
-    <Compile Include="Models\CreditRisk.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Order.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repos\BaseRepo.cs" />
-    <Compile Include="Repos\InventoryRepo.cs" />
-    <Compile Include="Repos\IRepo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907181418181_Initial.resx">
-      <DependentUpon>201907181418181_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907181444314_Final.resx">
-      <DependentUpon>201907181444314_Final.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoLotDAL\AutoLotDAL.csproj">
+      <Project>{d56bce4f-24bd-4a15-87d1-154856e175d8}</Project>
+      <Name>AutoLotDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
