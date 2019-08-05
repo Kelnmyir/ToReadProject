@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToRead_DAL", "ToRead_DAL\ToRead_DAL.csproj", "{B0A76FAA-E962-405A-AD00-43AB32B4FB25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToRead_DAL", "ToRead_DAL\ToRead_DAL.csproj", "{B0A76FAA-E962-405A-AD00-43AB32B4FB25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToRead_DAL.Models", "ToRead_DAL.Models\ToRead_DAL.Models.csproj", "{E4BC260E-6A25-4F1B-BDC0-326C42BAAAF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToRead_DAL.Models", "ToRead_DAL.Models\ToRead_DAL.Models.csproj", "{E4BC260E-6A25-4F1B-BDC0-326C42BAAAF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToRead_DAL.Models\ToRead_DAL.Models.csproj" />
+  </ItemGroup>
+
 </Project>

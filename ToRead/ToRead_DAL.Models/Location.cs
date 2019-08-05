@@ -12,5 +12,7 @@ namespace ToRead_DAL.Models
     {
         [StringLength(50)]
         public string Name { get; set; }
+
+        public IList<Book> Books { get; set; }
     }
 }

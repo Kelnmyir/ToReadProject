@@ -21,5 +21,11 @@ namespace ToRead_DAL.Models
 
         [StringLength(500)]
         public string Comment { get; set; }
+
+        public IList<AuthorBook> AuthorBooks { get; set; }
+
+        public IList<BookGenre> BookGenres { get; set; }
+
+        public Location Location { get; set; }
     }
 }
