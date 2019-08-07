@@ -17,6 +17,10 @@ namespace ToRead_DAL
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Location> Locations { get; set; }
 
+        internal ToReadContext()
+        {
+
+        }
         public ToReadContext(DbContextOptions options) : base(options)
         {
 
