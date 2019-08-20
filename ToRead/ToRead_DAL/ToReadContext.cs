@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -8,7 +9,7 @@ using ToRead_DAL.Models;
 
 namespace ToRead_DAL
 {
-    class ToReadContext : DbContext
+    public class ToReadContext : DbContext
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<AuthorBook> AuthorBooks { get; set; }
@@ -17,7 +18,7 @@ namespace ToRead_DAL
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Location> Locations { get; set; }
 
-        internal ToReadContext()
+        public ToReadContext()
         {
 
         }

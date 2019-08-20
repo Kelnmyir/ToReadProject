@@ -8,7 +8,7 @@ using ToRead_DAL.Models;
 
 namespace ToRead_DAL.DataInitialization
 {
-    class MyDataInitializer
+    public class MyDataInitializer
     {
         public static void InitializeData(ToReadContext context)
         {
@@ -62,6 +62,18 @@ namespace ToRead_DAL.DataInitialization
                 new AuthorBook{Author=authors[2],Book=books[2]},
             };
             context.AuthorBooks.AddRange(authorBooks);
+            context.SaveChanges();
+
+            var bookGenres = new List<BookGenre>
+            {
+                new BookGenre{Book=books[0],Genre=genres[1]},
+                new BookGenre{Book=books[1],Genre=genres[1]},
+                new BookGenre{Book=books[2],Genre=genres[0]},
+                new BookGenre{Book=books[3],Genre=genres[2]},
+                new BookGenre{Book=books[4],Genre=genres[4]},
+                new BookGenre{Book=books[5],Genre=genres[3]},
+            };
+            context.BookGenres.AddRange(bookGenres);
             context.SaveChanges();
         }
 

@@ -10,7 +10,7 @@ using ToRead_DAL.Models.Base;
 
 namespace ToRead_DAL.Repos
 {
-    class Repo<T> : IDisposable, IRepo<T> where T : EntityBase, new()
+    public class Repo<T> : IDisposable, IRepo<T> where T : EntityBase, new()
     {
         private readonly DbSet<T> _table;
         private readonly ToReadContext _db;
@@ -74,7 +74,7 @@ namespace ToRead_DAL.Repos
             return SaveChanges();
         }
 
-        public T GetOne(int? id)
+        public virtual T GetOne(int? id)
         {
             return _table.Find(id);
         }

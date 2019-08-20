@@ -9,6 +9,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.SqlServer;
+
+using ToRead_DAL;
+using ToRead_DAL.Models;
+using ToRead_DAL.Repos;
 
 namespace ToRead_MVC
 {
@@ -33,6 +40,11 @@ namespace ToRead_MVC
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContextPool<ToReadContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("LocalConnectionString"), o => o.EnableRetryOnFailure())
+                .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
+                );
+            services.AddScoped<IRepo<Book>, BookRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
