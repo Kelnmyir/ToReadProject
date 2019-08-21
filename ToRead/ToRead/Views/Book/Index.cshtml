@@ -1,0 +1,20 @@
+﻿@model List<ToRead.MVC.Models.BookModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All yor books are here</h1>
+<hr/>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Annotation</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Annotation</td>
+        </tr>
+    }
+</table>
