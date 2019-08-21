@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[books]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[Name] NVARCHAR(100) NOT NULL,
+	[Annotation] NVARCHAR(500) NULL
+)
