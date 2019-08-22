@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ToRead.Data
 {
-    class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         readonly AppContext _context;
 
@@ -32,9 +32,15 @@ namespace ToRead.Data
             return result;
         }
 
+        public T GetOne(int id)
+        {
+            T result = _context.Set<T>().Find(id);
+            return result;
+        }
+
         public void Update(T obj)
         {
-            _context.Entry(obj).State = EntityState.Modified;
+            _context.Set<T>().Update(obj);
             _context.SaveChanges();
         }
     }

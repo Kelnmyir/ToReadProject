@@ -6,9 +6,11 @@ using System.Text;
 
 namespace ToRead.Data
 {
-    interface IRepository<T> where T: class
+    public interface IRepository<T> where T: class
     {
         IQueryable<T> Get();
+
+        T GetOne(int id);
 
         void Create(T obj);
 

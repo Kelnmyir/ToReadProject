@@ -4,17 +4,18 @@
 }
 
 <h1>All yor books are here</h1>
-<hr/>
+<hr />
 <table>
     <tr>
         <th>Name</th>
         <th>Annotation</th>
     </tr>
-    @foreach(var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
-            <td>@item.Name</td>
+            <td><a asp-action="Update" asp-route-id="@item.Id">@item.Name</a></td>
             <td>@item.Annotation</td>
+            <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
         </tr>
     }
 </table>

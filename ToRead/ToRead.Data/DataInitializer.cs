@@ -5,7 +5,7 @@ using ToRead.Data.Models;
 
 namespace ToRead.Data
 {
-    class DataInitializer
+    public class DataInitializer
     {
         private readonly AppContext _context;
 

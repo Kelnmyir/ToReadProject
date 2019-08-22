@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToRead.Data.Models
 {
+    [Table("books")]
     public class Book
     {
         [Key]

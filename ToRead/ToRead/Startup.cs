@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using ToRead.Data;
+using ToRead.Data.Models;
 
 
 namespace ToRead
@@ -29,6 +30,8 @@ namespace ToRead
         {
             services.AddDbContext<ToRead.Data.AppContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("local")));
 
+            services.AddScoped<IRepository<Book>, Repository<Book>>();
+
             services.AddMvc();
 
             services.AddAutoMapper(typeof(Startup));
@@ -42,7 +45,12 @@ namespace ToRead
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
