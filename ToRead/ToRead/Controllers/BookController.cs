@@ -14,9 +14,9 @@ namespace ToRead.MVC.Controllers
     public class BookController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<Book> _repository;
+        private readonly IBookRepository _repository;
 
-        public BookController(IRepository<Book> repository, IMapper mapper)
+        public BookController(IBookRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -62,6 +62,14 @@ namespace ToRead.MVC.Controllers
             var book = _mapper.Map<Data.Models.Book>(model);
             _repository.Update(book);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Details (int id)
+        {
+            var book = _repository.GetBookDetailed(id);
+            var model = _mapper.Map<MVC.Models.BookModel>(book);
+            return View(model);
         }
 
         [HttpGet]

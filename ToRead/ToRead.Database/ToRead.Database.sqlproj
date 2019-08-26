@@ -59,5 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="books.sql" />
+    <Build Include="locations.sql" />
   </ItemGroup>
 </Project>

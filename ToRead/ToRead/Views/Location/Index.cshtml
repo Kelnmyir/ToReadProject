@@ -1,4 +1,4 @@
-﻿@model List<ToRead.MVC.Models.BookModel>
+﻿@model List<ToRead.MVC.Models.LocationModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,14 +7,14 @@
 <hr />
 <table>
     <tr>
-        <th>Name</th>
-        <th>Annotation</th>
+        <th>Place</th>
+        <th>Shelf</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-            <td><a asp-action="Update" asp-route-id="@item.Id">@item.Name</a></td>
-            <td>@item.Annotation</td>
+            <td><a asp-action="Update" asp-route-id="@item.Id">@item.Place</a></td>
+            <td>@item.Shelf</td>
             <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
             <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
         </tr>

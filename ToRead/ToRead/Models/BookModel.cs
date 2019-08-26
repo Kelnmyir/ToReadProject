@@ -12,5 +12,9 @@ namespace ToRead.MVC.Models
         public string Name { get; set; }
 
         public string Annotation { get; set; }
+
+        public string LocationPlace { get; set; }
+
+        public int LocationShelf { get; set; }
     }
 }

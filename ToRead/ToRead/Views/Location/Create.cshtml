@@ -1,0 +1,23 @@
+﻿@model ToRead.MVC.Models.LocationModel;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<hr />
+
+<form asp-action="Create">
+    <div>
+        <label asp-for="Place">Place</label>
+        <input asp-for="Place" />
+    </div>
+    <div>
+        <label asp-for="Shelf">Shelf</label>
+        <input asp-for="Shelf" />
+    </div>
+    <div>
+        <input type="submit" value="Create" />
+    </div>
+</form>

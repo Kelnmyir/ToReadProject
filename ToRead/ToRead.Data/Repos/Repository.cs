@@ -8,7 +8,7 @@ namespace ToRead.Data
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        readonly AppContext _context;
+        protected readonly AppContext _context;
 
         public Repository(AppContext context)
         {

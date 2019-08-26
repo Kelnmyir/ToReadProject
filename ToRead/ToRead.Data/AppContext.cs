@@ -14,5 +14,6 @@ namespace ToRead.Data
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }

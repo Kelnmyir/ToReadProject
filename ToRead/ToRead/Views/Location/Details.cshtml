@@ -1,0 +1,33 @@
+﻿@model ToRead.MVC.Models.LocationModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <label asp-for="Place">Place</label>
+    <p>@Model.Place</p>
+    <label asp-for="Shelf">Shelf</label>
+    <p>@Model.Shelf</p>
+</div>
+<div>
+    <h4>Books of this location are:</h4>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Annotation</th>
+        </tr>
+        @foreach (var item in Model.BookModels)
+        {
+            <tr>
+                <td><a asp-action="Update" asp-route-id="@item.Id">@item.Name</a></td>
+                <td>@item.Annotation</td>
+                <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
+                <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+            </tr>
+        }
+    </table>
+
+</div>

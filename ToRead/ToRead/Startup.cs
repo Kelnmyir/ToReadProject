@@ -31,6 +31,9 @@ namespace ToRead
             services.AddDbContext<ToRead.Data.AppContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("local")));
 
             services.AddScoped<IRepository<Book>, Repository<Book>>();
+            services.AddScoped<IRepository<Location>, Repository<Location>>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
 
             services.AddMvc();
 

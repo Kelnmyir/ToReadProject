@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[locations]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Place] NVARCHAR(50) NOT NULL,
+	[Shelf] INT NULL
+)

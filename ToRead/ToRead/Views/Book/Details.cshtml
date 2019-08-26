@@ -1,0 +1,21 @@
+﻿@model ToRead.MVC.Models.BookModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<hr />
+
+<div>
+    <label asp-for="Name">Name</label>
+    <p>@Model.Name</p>
+    <label asp-for="Annotation">Annotation</label>
+    <p>@Model.Annotation</p>
+    <label asp-for="LocationPlace">Place</label>
+    <p>@Model.LocationPlace</p>
+    <label asp-for="LocationShelf">Shelf</label>
+    <p>@Model.LocationShelf</p>
+</div>
+<div><a asp-action="Index">Return to list</a></div>
