@@ -19,14 +19,19 @@
             <th>Name</th>
             <th>Annotation</th>
         </tr>
-        @foreach (var item in Model.BookModels)
+        @if (Model.BookModels == null)
         {
-            <tr>
-                <td><a asp-action="Update" asp-route-id="@item.Id">@item.Name</a></td>
-                <td>@item.Annotation</td>
-                <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
-                <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
-            </tr>
+            <tr><td>No books for this shelf...</td></tr>
+        }
+        else
+        {
+            @foreach (var item in Model.BookModels)
+            {
+                <tr>
+                    <td><a asp-action="Update" asp-route-id="@item.Id">@item.Name</a></td>
+                    <td>@item.Annotation</td>
+                </tr>
+            }
         }
     </table>
 

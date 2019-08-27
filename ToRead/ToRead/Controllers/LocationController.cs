@@ -64,6 +64,10 @@ namespace ToRead.MVC.Controllers
         {
             Location location = _repository.GetLocationDetailed(id);
             LocationModel model = _mapper.Map<LocationModel>(location);
+            if (location.Books != null)
+            {
+                model.BookModels = _mapper.Map<ICollection<Book>, ICollection<BookModel>>(location.Books);
+            }
             return View(model);
         }
 

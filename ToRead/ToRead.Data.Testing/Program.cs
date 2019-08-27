@@ -21,17 +21,16 @@ namespace ToRead.Data.Testing
         {
             AppContext context = CreateContext();
 
-            /*var bookRepo = new BookRepository(context);
+            var bookRepo = new BookRepository(context);
             Console.WriteLine("\nAll books:");
             foreach (Book book in bookRepo.Get())
             {
                 Book bookDetailed = bookRepo.GetBookDetailed(book.Id);
                 Console.WriteLine($"Name: {bookDetailed.Name}\nAnnotation: {bookDetailed.Annotation}\nPlace: {bookDetailed.Location.Place}\nShelf: {bookDetailed.Location.Shelf}\n\n");
-            }*/
+            }
 
             var locationRepo = new LocationRepository(context);
             Console.WriteLine("\nAll shelves:");
-
             foreach (Location location in locationRepo.Get().ToList())
             {
                 Location locDetailed = locationRepo.GetLocationDetailed(location.Id);
@@ -40,7 +39,6 @@ namespace ToRead.Data.Testing
                 {
                     Console.WriteLine($"Name: {book.Name}\t\tAnnotation: {book.Annotation}\n\n");
                 }
-                Thread.Sleep(2000);
             }
 
             Console.ReadKey();
