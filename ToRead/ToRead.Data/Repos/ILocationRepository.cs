@@ -5,8 +5,8 @@ using ToRead.Data.Models;
 
 namespace ToRead.Data
 {
-    public interface ILocationRepository : IRepository<Location>
+    public interface ILocationRepository : IRepository<LocationEntity>
     {
-        Location GetLocationDetailed(int id);
+        LocationEntity GetLocationDetailed(int id);
     }
 }

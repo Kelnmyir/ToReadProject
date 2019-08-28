@@ -6,16 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToRead.Data.Models
 {
-    [Table("books")]
-    public class Book
+    [Table("genres")]
+    public class GenreEntity : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
-        public string Annotation { get; set; }
+        public string Description { get; set; }
 
-        public Location Location { get; set; }
+        public ICollection<GenresBooksEntity> GenresBooks { get; } = new List<GenresBooksEntity>();
     }
 }

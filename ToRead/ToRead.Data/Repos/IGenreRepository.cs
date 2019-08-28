@@ -5,8 +5,8 @@ using ToRead.Data.Models;
 
 namespace ToRead.Data
 {
-    public interface IBookRepository : IRepository<BookEntity>
+    public interface IGenreRepository : IRepository<GenreEntity>
     {
-        BookEntity GetBookDetailed(int id);
+        GenreEntity GetGenreDetailed(int id);
     }
 }

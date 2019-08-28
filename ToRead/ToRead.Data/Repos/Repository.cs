@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using ToRead.Data.Models;
 
 namespace ToRead.Data
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly AppContext _context;
 
@@ -38,9 +40,10 @@ namespace ToRead.Data
             return result;
         }
 
-        public void Update(T obj)
+        public virtual void Update(T obj)
         {
-            _context.Set<T>().Update(obj);
+            var entityToUpdate = _context.Set<T>().Find(obj.Id);
+            _context.Entry(entityToUpdate).CurrentValues.SetValues(obj);
             _context.SaveChanges();
         }
     }

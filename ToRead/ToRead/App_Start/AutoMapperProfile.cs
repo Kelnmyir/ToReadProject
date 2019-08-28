@@ -10,12 +10,14 @@ namespace ToRead.MVC
     {
         public AutoMapperProfile()
         {
-            CreateMap<Data.Models.Book, MVC.Models.BookModel>();
-            CreateMap<MVC.Models.BookModel, Data.Models.Book>();
+            CreateMap<Data.Models.BookEntity, MVC.Models.BookModel>();
+            CreateMap<MVC.Models.BookModel, Data.Models.BookEntity>();
 
-            CreateMap<Data.Models.Location, MVC.Models.LocationModel>();
-            CreateMap<MVC.Models.LocationModel, Data.Models.Location>();
+            CreateMap<Data.Models.LocationEntity, MVC.Models.LocationModel>();
+            CreateMap<MVC.Models.LocationModel, Data.Models.LocationEntity>();
 
+            CreateMap<Data.Models.AuthorEntity, MVC.Models.AuthorModel>();
+            CreateMap<MVC.Models.AuthorModel, Data.Models.AuthorEntity>();
         }
     }
 }

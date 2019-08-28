@@ -1,0 +1,23 @@
+﻿@model ToRead.MVC.Models.AuthorModel;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<hr />
+
+<form asp-action="Create">
+    <div>
+        <label asp-for="FirstName">First Name</label>
+        <input asp-for="FirstName" />
+    </div>
+    <div>
+        <label asp-for="LastName">Last Name</label>
+        <input asp-for="LastName" />
+    </div>
+    <div>
+        <input type="submit" value="Create" />
+    </div>
+</form>

@@ -9,16 +9,20 @@ using System.Linq;
 
 namespace ToRead.Data
 {
-    public class BookRepository : Repository<Book>, IBookRepository
+    public class BookRepository : Repository<BookEntity>, IBookRepository
     {
         public BookRepository(AppContext context) : base (context)
         {
 
         }
 
-        public Book GetBookDetailed(int id)
+        public BookEntity GetBookDetailed(int id)
         {
             var book = _context.Books
+                .Include(b => b.AuthorsBooks)
+                    .ThenInclude(ab => ab.Author)
+                .Include(b => b.GenresBooks)
+                    .ThenInclude(gb => gb.Genre)
                 .Include(b => b.Location)
                 .Where(b => b.Id == id)
                 .Single();

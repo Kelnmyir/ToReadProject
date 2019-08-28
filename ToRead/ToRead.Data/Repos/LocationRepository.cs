@@ -7,14 +7,14 @@ using ToRead.Data.Models;
 
 namespace ToRead.Data
 {
-    public class LocationRepository : Repository<Location>, ILocationRepository
+    public class LocationRepository : Repository<LocationEntity>, ILocationRepository
     {
         public LocationRepository(AppContext context) : base(context)
         {
 
         }
 
-        public Location GetLocationDetailed(int id)
+        public LocationEntity GetLocationDetailed(int id)
         {
             var loc = _context.Locations
                 .Include(l => l.Books)

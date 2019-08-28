@@ -28,7 +28,7 @@
             @foreach (var item in Model.BookModels)
             {
                 <tr>
-                    <td><a asp-action="Update" asp-route-id="@item.Id">@item.Name</a></td>
+                    <td>@item.Name</td>
                     <td>@item.Annotation</td>
                 </tr>
             }

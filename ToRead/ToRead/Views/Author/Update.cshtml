@@ -1,0 +1,25 @@
+﻿@model ToRead.MVC.Models.AuthorModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Update</h1>
+
+<hr />
+<p>Bug! Updating don't work</p>
+
+<form>
+    <input type="hidden" asp-for="Id" />
+    <div>
+        <label asp-for="FirstName">First Name</label>
+        <input asp-for="FirstName" />
+    </div>
+    <div>
+        <label asp-for="LastName">Last Name</label>
+        <input asp-for="LastName" />
+    </div>
+    <div>
+        <input type="submit" value="Update" />
+    </div>
+</form>

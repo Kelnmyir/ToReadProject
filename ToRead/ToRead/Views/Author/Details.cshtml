@@ -1,0 +1,31 @@
+﻿@model ToRead.MVC.Models.AuthorModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <label asp-for="FirstName">First Name</label>
+    <p>@Model.FirstName</p>
+    <label asp-for="LastName">Last Name</label>
+    <p>@Model.LastName</p>
+</div>
+<div>
+    <h4>This author has written:</h4>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Annotation</th>
+        </tr>
+        @foreach (var item in Model.BookModels)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Annotation</td>
+            </tr>
+        }
+    </table>
+
+</div>

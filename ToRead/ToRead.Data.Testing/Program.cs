@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
 
@@ -21,30 +22,101 @@ namespace ToRead.Data.Testing
         {
             AppContext context = CreateContext();
 
-            var bookRepo = new BookRepository(context);
-            Console.WriteLine("\nAll books:");
-            foreach (Book book in bookRepo.Get())
-            {
-                Book bookDetailed = bookRepo.GetBookDetailed(book.Id);
-                Console.WriteLine($"Name: {bookDetailed.Name}\nAnnotation: {bookDetailed.Annotation}\nPlace: {bookDetailed.Location.Place}\nShelf: {bookDetailed.Location.Shelf}\n\n");
-            }
+            DataInitializer initializer = new DataInitializer(context);
+            initializer.Initialize();
 
-            var locationRepo = new LocationRepository(context);
-            Console.WriteLine("\nAll shelves:");
-            foreach (Location location in locationRepo.Get().ToList())
-            {
-                Location locDetailed = locationRepo.GetLocationDetailed(location.Id);
-                Console.WriteLine($"Place: {locDetailed.Place}\t\tShelf: {locDetailed.Shelf}\nBooks are:\n");
-                foreach (Book book in locDetailed.Books)
-                {
-                    Console.WriteLine($"Name: {book.Name}\t\tAnnotation: {book.Annotation}\n\n");
-                }
-            }
+            TestReading(context);
+
+            TestUpdating(context);
 
             Console.ReadKey();
         }
 
-        static AppContext CreateContext()
+        private static void TestReading(AppContext context)
+        {
+            var bookRepo = new BookRepository(context);
+            Console.WriteLine("\nAll books:");
+            foreach (BookEntity book in bookRepo.Get())
+            {
+                BookEntity bookDetailed = bookRepo.GetBookDetailed(book.Id);
+                Console.WriteLine($"Name: {bookDetailed.Name}\nAnnotation: {bookDetailed.Annotation}");
+                if (bookDetailed.Location != null)
+                    Console.WriteLine($"Place: {bookDetailed.Location.Place}\nShelf: {bookDetailed.Location.Shelf}");
+                else Console.WriteLine("No location for this book");
+                Console.WriteLine("Authors:");
+                foreach (AuthorsBooksEntity ab in bookDetailed.AuthorsBooks)
+                {
+                    Console.WriteLine($"{ab.Author.FirstName} {ab.Author.LastName}");
+                }
+                Console.WriteLine("Genres:");
+                foreach (GenresBooksEntity gb in bookDetailed.GenresBooks)
+                {
+                    Console.WriteLine(gb.Genre.Name);
+                }
+                Console.WriteLine();
+            }
+
+            var locationRepo = new LocationRepository(context);
+            Console.WriteLine("\nAll shelves:");
+            foreach (LocationEntity location in locationRepo.Get().ToList())
+            {
+                LocationEntity locDetailed = locationRepo.GetLocationDetailed(location.Id);
+                Console.WriteLine($"Place: {locDetailed.Place}\t\tShelf: {locDetailed.Shelf}\nBooks are:");
+                foreach (BookEntity book in locDetailed.Books)
+                {
+                    Console.WriteLine($"Name: {book.Name}\t\tAnnotation: {book.Annotation}");
+                }
+                Console.WriteLine();
+            }
+
+            var authorRepo = new AuthorRepositoty(context);
+            Console.WriteLine("\nAll authors:");
+            foreach (AuthorEntity author in authorRepo.Get().ToList())
+            {
+                AuthorEntity authorDetailed = authorRepo.GetAuthorDetailed(author.Id);
+                Console.WriteLine($"{authorDetailed.FirstName} {authorDetailed.LastName}\nBooks of this author:");
+                foreach (AuthorsBooksEntity ab in authorDetailed.AuthorsBooks)
+                {
+                    Console.WriteLine($"Name: {ab.Book.Name}\nAnnotation: {ab.Book.Annotation}");
+                }
+                Console.WriteLine();
+            }
+
+            var genreRepo = new GenreRepository(context);
+            Console.WriteLine("\nAll genres:");
+            foreach (var genre in genreRepo.Get().ToList())
+            {
+                GenreEntity genreDetailed = genreRepo.GetGenreDetailed(genre.Id);
+                Console.WriteLine($"{genreDetailed.Name}\nBooks of this genre:");
+                foreach (GenresBooksEntity gb in genreDetailed.GenresBooks)
+                {
+                    Console.WriteLine($"Name: {gb.Book.Name}\nAnnotation: {gb.Book.Annotation}");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private static void TestUpdating(AppContext context)
+        {
+            var bookRepo = new BookRepository(context);
+            var locationRepo = new LocationRepository(context);
+            var book = context.Books.AsNoTracking().FirstOrDefault();
+            try
+            {
+                var newBook = new BookEntity { Id = book.Id, Name = "New book", Annotation = "New Annotation", Location = context.Locations.FirstOrDefault() };
+                bookRepo.Update(newBook);
+                var updatedBook = bookRepo.GetBookDetailed(book.Id);
+                Console.WriteLine(updatedBook.Name);
+                //Console.WriteLine(updatedBook.Location.Place);
+                Console.WriteLine("Successful update");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private static AppContext CreateContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<Data.AppContext>();
             string connectionString = "server=(LocalDb)\\MSSQLLocalDB;database=ToRead;User ID=Kelnmyir;Password=solresol;MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=30;";

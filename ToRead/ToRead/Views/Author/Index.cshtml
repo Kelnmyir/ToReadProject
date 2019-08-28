@@ -1,0 +1,17 @@
+﻿@model List<ToRead.MVC.Models.AuthorModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All yor authors are here</h1>
+<hr />
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><a asp-action="Update" asp-route-id="@item.Id">@item.FirstName @item.LastName</a></td>
+            <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
+            <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+        </tr>
+    }
+</table>

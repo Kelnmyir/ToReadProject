@@ -7,15 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ToRead.Data.Models
 {
     [Table("locations")]
-    public class Location
+    public class LocationEntity : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Place { get; set; }
 
         public int Shelf { get; set; }
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<BookEntity> Books { get; } = new List<BookEntity>();
     }
 }

@@ -25,12 +25,7 @@ namespace ToRead.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var books = _repository.Get().ToList();
-            var bookModels = new List<BookModel>();
-            foreach(Book book in books)
-            {
-                bookModels.Add(_mapper.Map<BookModel>(book));
-            }
+            var bookModels = _mapper.Map<List<BookEntity>, List<BookModel>>(_repository.Get().ToList());
             return View(bookModels);
         }
 
@@ -43,7 +38,7 @@ namespace ToRead.MVC.Controllers
         [HttpPost]
         public IActionResult Create(BookModel model)
         {
-            var book = _mapper.Map<Data.Models.Book>(model);
+            var book = _mapper.Map<Data.Models.BookEntity>(model);
             _repository.Create(book);
             return RedirectToAction("Index");
         }
@@ -59,7 +54,7 @@ namespace ToRead.MVC.Controllers
         [HttpPost]
         public IActionResult Update (BookModel model)
         {
-            var book = _mapper.Map<Data.Models.Book>(model);
+            var book = _mapper.Map<Data.Models.BookEntity>(model);
             _repository.Update(book);
             return RedirectToAction("Index");
         }
@@ -69,6 +64,12 @@ namespace ToRead.MVC.Controllers
         {
             var book = _repository.GetBookDetailed(id);
             var model = _mapper.Map<MVC.Models.BookModel>(book);
+            var authors = new List<AuthorEntity>();
+            foreach(AuthorsBooksEntity ab in book.AuthorsBooks)
+            {
+                authors.Add(ab.Author);
+            }
+            model.AuthorModels = _mapper.Map<ICollection<AuthorEntity>, ICollection<AuthorModel>>(authors);
             return View(model);
         }
 

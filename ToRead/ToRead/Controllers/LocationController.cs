@@ -25,7 +25,7 @@ namespace ToRead.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<LocationModel> locationModels = _mapper.Map<List<Location>, List<LocationModel>>(_repository.Get().ToList());
+            List<LocationModel> locationModels = _mapper.Map<List<LocationEntity>, List<LocationModel>>(_repository.Get().ToList());
             return View(locationModels);
         }
 
@@ -38,7 +38,7 @@ namespace ToRead.MVC.Controllers
         [HttpPost]
         public IActionResult Create(LocationModel model)
         {
-            Location location = _mapper.Map<Location>(model);
+            LocationEntity location = _mapper.Map<LocationEntity>(model);
             _repository.Create(location);
             return RedirectToAction("Index");
         }
@@ -46,7 +46,7 @@ namespace ToRead.MVC.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Location location = _repository.GetOne(id);
+            LocationEntity location = _repository.GetOne(id);
             LocationModel model = _mapper.Map<LocationModel>(location);
             return View(model);
         }
@@ -54,7 +54,7 @@ namespace ToRead.MVC.Controllers
         [HttpPost]
         public IActionResult Update(LocationModel model)
         {
-            Location location = _mapper.Map<Location>(model);
+            LocationEntity location = _mapper.Map<LocationEntity>(model);
             _repository.Update(location);
             return RedirectToAction("Index");
         }
@@ -62,11 +62,11 @@ namespace ToRead.MVC.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            Location location = _repository.GetLocationDetailed(id);
+            LocationEntity location = _repository.GetLocationDetailed(id);
             LocationModel model = _mapper.Map<LocationModel>(location);
             if (location.Books != null)
             {
-                model.BookModels = _mapper.Map<ICollection<Book>, ICollection<BookModel>>(location.Books);
+                model.BookModels = _mapper.Map<ICollection<BookEntity>, ICollection<BookModel>>(location.Books);
             }
             return View(model);
         }
@@ -74,7 +74,7 @@ namespace ToRead.MVC.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            Location location = _repository.GetOne(id);
+            LocationEntity location = _repository.GetOne(id);
             _repository.Delete(location);
             return RedirectToAction("Index");
         }
