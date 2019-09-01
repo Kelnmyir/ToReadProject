@@ -13,6 +13,6 @@ namespace ToRead.Data.Models
 
         public string Description { get; set; }
 
-        public ICollection<GenresBooksEntity> GenresBooks { get; } = new List<GenresBooksEntity>();
+        public ICollection<GenresBooksEntity> GenresBooks { get; set; } = new List<GenresBooksEntity>();
     }
 }

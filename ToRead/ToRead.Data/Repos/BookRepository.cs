@@ -19,10 +19,10 @@ namespace ToRead.Data
         public BookEntity GetBookDetailed(int id)
         {
             var book = _context.Books
-                .Include(b => b.AuthorsBooks)
-                    .ThenInclude(ab => ab.Author)
                 .Include(b => b.GenresBooks)
                     .ThenInclude(gb => gb.Genre)
+                .Include(b => b.AuthorsBooks)
+                    .ThenInclude(ab => ab.Author)
                 .Include(b => b.Location)
                 .Where(b => b.Id == id)
                 .Single();

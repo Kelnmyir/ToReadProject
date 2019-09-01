@@ -27,13 +27,20 @@ namespace ToRead.Data.Testing
 
             TestReading(context);
 
+            Console.ReadKey();
+
             TestUpdating(context);
+
+            Console.ReadKey();
+
+            TestCreating(context);
 
             Console.ReadKey();
         }
 
         private static void TestReading(AppContext context)
         {
+            Console.WriteLine("Test Reading");
             var bookRepo = new BookRepository(context);
             Console.WriteLine("\nAll books:");
             foreach (BookEntity book in bookRepo.Get())
@@ -98,13 +105,16 @@ namespace ToRead.Data.Testing
 
         private static void TestUpdating(AppContext context)
         {
+            Console.WriteLine("Test Updating");
             var bookRepo = new BookRepository(context);
             var locationRepo = new LocationRepository(context);
             var book = context.Books.AsNoTracking().FirstOrDefault();
+            //BUG! Related data are not updated
             try
             {
                 var newBook = new BookEntity { Id = book.Id, Name = "New book", Annotation = "New Annotation", Location = context.Locations.FirstOrDefault() };
                 bookRepo.Update(newBook);
+                Console.WriteLine(newBook.Location.Place);
                 var updatedBook = bookRepo.GetBookDetailed(book.Id);
                 Console.WriteLine(updatedBook.Name);
                 //Console.WriteLine(updatedBook.Location.Place);
@@ -114,6 +124,15 @@ namespace ToRead.Data.Testing
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private static void TestCreating(AppContext context)
+        {
+            Console.WriteLine("Test creating");
+            var bookRepo = new BookRepository(context);
+            var newBook = new BookEntity { Name = "New book", Annotation = "New Annotation", Location = context.Locations.FirstOrDefault() };
+            bookRepo.Create(newBook);
+            TestReading(context);
         }
 
         private static AppContext CreateContext()

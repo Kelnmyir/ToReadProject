@@ -14,6 +14,6 @@ namespace ToRead.Data.Models
 
         public string LastName { get; set; }
 
-        public ICollection<AuthorsBooksEntity> AuthorsBooks { get; } = new List<AuthorsBooksEntity>();
+        public ICollection<AuthorsBooksEntity> AuthorsBooks { get; set; } = new List<AuthorsBooksEntity>();
     }
 }

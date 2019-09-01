@@ -15,8 +15,8 @@ namespace ToRead.Data.Models
 
         public LocationEntity Location { get; set; }
 
-        public ICollection<AuthorsBooksEntity> AuthorsBooks { get; } = new List<AuthorsBooksEntity>();
+        public ICollection<AuthorsBooksEntity> AuthorsBooks { get; set; } 
 
-        public ICollection<GenresBooksEntity> GenresBooks { get; } = new List<GenresBooksEntity>();
+        public ICollection<GenresBooksEntity> GenresBooks { get; set; }
     }
 }

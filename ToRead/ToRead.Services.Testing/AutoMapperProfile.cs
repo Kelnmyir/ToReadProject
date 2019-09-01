@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 
-namespace ToRead.MVC
+namespace ToRead.Services.Testing
 {
     public class AutoMapperProfile : Profile
     {

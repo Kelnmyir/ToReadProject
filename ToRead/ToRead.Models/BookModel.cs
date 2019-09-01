@@ -17,6 +17,8 @@ namespace ToRead.MVC.Models
 
         public int LocationShelf { get; set; }
 
-        public ICollection<AuthorModel> AuthorModels { get; set; }
+        public ICollection<AuthorModel> AuthorModels { get; set; } = new List<AuthorModel>();
+
+        public ICollection<GenreModel> GenreModels { get; set; } = new List<GenreModel>();
     }
 }

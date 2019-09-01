@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ToRead.Data\ToRead.Data.csproj" />
+    <ProjectReference Include="..\ToRead.Models\ToRead.MVC.Models.csproj" />
+    <ProjectReference Include="..\ToRead.Services\ToRead.Services.csproj" />
   </ItemGroup>
 
 </Project>
