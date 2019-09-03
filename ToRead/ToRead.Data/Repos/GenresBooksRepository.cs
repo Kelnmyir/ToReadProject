@@ -9,7 +9,7 @@ namespace ToRead.Data
 {
     public class GenresBooksRepository : IGenresBooksRepository
     {
-        private AppContext _context;
+        private readonly AppContext _context;
 
         public GenresBooksRepository(AppContext context)
         {

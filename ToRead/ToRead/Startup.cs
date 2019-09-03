@@ -33,7 +33,7 @@ namespace ToRead
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<IAuthorRepository, AuthorRepositoty>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
 
             services.AddMvc();

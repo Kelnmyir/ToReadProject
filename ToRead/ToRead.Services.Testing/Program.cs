@@ -28,7 +28,7 @@ namespace ToRead.Services.Testing
             var initializer = new DataInitializer(context);
             initializer.Initialize();
 
-            var authorRepo = new AuthorRepositoty(context);
+            var authorRepo = new AuthorRepository(context);
             var bookRepo = new BookRepository(context);
             var genreRepo = new GenreRepository(context);
             var locationRepo = new LocationRepository(context);
@@ -40,9 +40,10 @@ namespace ToRead.Services.Testing
 
             Console.WriteLine("Testing books service");
             var bookService = new BookService(bookRepo, authorRepo, abRepo, genreRepo, gbRepo, locationRepo, mapper);
+            var authorService = new AuthorService(authorRepo, abRepo, bookRepo, mapper);
 
-            BookTester bookTester = new BookTester(bookService);
-            bookTester.TestUpdating();
+            AuthorTester authorTester = new AuthorTester(authorService, bookService);
+            authorTester.TestUpdating();
 
             Console.ReadKey();
         }

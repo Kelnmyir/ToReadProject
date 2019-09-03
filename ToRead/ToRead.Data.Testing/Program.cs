@@ -76,7 +76,7 @@ namespace ToRead.Data.Testing
                 Console.WriteLine();
             }
 
-            var authorRepo = new AuthorRepositoty(context);
+            var authorRepo = new AuthorRepository(context);
             Console.WriteLine("\nAll authors:");
             foreach (AuthorEntity author in authorRepo.Get().ToList())
             {

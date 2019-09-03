@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace ToRead.Data
 {
-    public class AuthorRepositoty : Repository<AuthorEntity>, IAuthorRepository
+    public class AuthorRepository : Repository<AuthorEntity>, IAuthorRepository
     {
-        public AuthorRepositoty(AppContext context) : base(context)
+        public AuthorRepository(AppContext context) : base(context)
         {
 
         }

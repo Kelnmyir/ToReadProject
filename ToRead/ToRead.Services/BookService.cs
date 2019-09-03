@@ -10,7 +10,7 @@ namespace ToRead.Services
 {
     public class BookService : IBookService
     {
-        private readonly IBookRepository _repository;
+        private readonly IBookRepository _bookRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly IAuthorsBooksRepository _abRepository;
         private readonly IGenreRepository _genreRepository;
@@ -27,7 +27,7 @@ namespace ToRead.Services
             ILocationRepository locationRepository,
             IMapper mapper)
         {
-            _repository = bookRepository;
+            _bookRepository = bookRepository;
             _authorRepository = authorRepository;
             _abRepository = abRepository;
             _genreRepository = genreRepository;
@@ -43,7 +43,7 @@ namespace ToRead.Services
                 book.Location = _locationRepository.Get()
                     .Where(l => (l.Place == model.LocationPlace) && (l.Shelf == model.LocationShelf))
                     .Single();
-            _repository.Create(book);
+            _bookRepository.Create(book);
             foreach (AuthorModel authorModel in model.AuthorModels)
             {
                 var author = _authorRepository.GetOne(authorModel.Id);
@@ -58,7 +58,7 @@ namespace ToRead.Services
 
         public void Delete(BookModel model)
         {
-            var book = _repository.GetBookDetailed(model.Id);
+            var book = _bookRepository.GetBookDetailed(model.Id);
             foreach (AuthorsBooksEntity ab in book.AuthorsBooks.ToList())
             {
                 _abRepository.Delete(ab);
@@ -67,18 +67,18 @@ namespace ToRead.Services
             {
                 _gbRepository.Delete(gb);
             }
-            _repository.Delete(book);
+            _bookRepository.Delete(book);
         }
 
         public ICollection<BookModel> GetAllBooks()
         {
-            var books = _repository.Get().ToList();
+            var books = _bookRepository.Get().ToList();
             return _mapper.Map<ICollection<BookEntity>, ICollection<BookModel>>(books);
         }
 
         public BookModel GetBook(int id)
         {
-            var book = _repository.GetBookDetailed(id);
+            var book = _bookRepository.GetBookDetailed(id);
             BookModel model = _mapper.Map<BookModel>(book);
             foreach (var ab in book.AuthorsBooks)
             {
@@ -116,7 +116,7 @@ namespace ToRead.Services
                 _gbRepository.Create(new GenresBooksEntity { Book = book, Genre = genre });
             }
 
-            _repository.Update(book);
+            _bookRepository.Update(book);
         }
     }
 }
