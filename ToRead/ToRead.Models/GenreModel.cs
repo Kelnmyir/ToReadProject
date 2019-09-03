@@ -12,6 +12,6 @@ namespace ToRead.MVC.Models
 
         public string Description { get; set; }
 
-        public ICollection<BookModel> BookModels { get; set; }
+        public ICollection<BookModel> BookModels { get; set; } = new List<BookModel>();
     }
 }

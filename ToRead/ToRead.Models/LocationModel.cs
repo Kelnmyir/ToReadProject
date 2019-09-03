@@ -13,6 +13,6 @@ namespace ToRead.MVC.Models
 
         public int Shelf { get; set; }
 
-        public ICollection<BookModel> BookModels { get; set; }
+        public ICollection<BookModel> BookModels { get; set; } = new List<BookModel>();
     }
 }

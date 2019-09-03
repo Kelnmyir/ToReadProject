@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using ToRead.Data;
-using ToRead.Data.Models;
 using ToRead.Services;
 using ToRead.MVC.Models;
 
