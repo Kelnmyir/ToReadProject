@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using ToRead.Data.Models;
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {

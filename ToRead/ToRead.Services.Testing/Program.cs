@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ToRead.Data;
+using ToRead.Data.EF;
 using ToRead.Data.Models;
 using ToRead.Services;
 using ToRead.MVC.Models;
@@ -15,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.SqlServer;
-using AppContext = ToRead.Data.AppContext;
+using AppContext = ToRead.Data.EF.AppContext;
 
 namespace ToRead.Services.Testing
 {
@@ -51,7 +52,7 @@ namespace ToRead.Services.Testing
 
         private static AppContext CreateContext()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<Data.AppContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<AppContext>();
             string connectionString = "server=(LocalDb)\\MSSQLLocalDB;database=ToRead;User ID=Kelnmyir;Password=solresol;MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=30;";
             optionsBuilder.UseSqlServer(connectionString);
             return new AppContext(optionsBuilder.Options);

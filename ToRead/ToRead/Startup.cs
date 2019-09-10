@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using ToRead.Data;
+using ToRead.Data.EF;
 using ToRead.Data.Models;
 using ToRead.Services;
 
@@ -29,7 +30,7 @@ namespace ToRead
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ToRead.Data.AppContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("local")));
+            services.AddDbContext<ToRead.Data.EF.AppContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("local")));
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();

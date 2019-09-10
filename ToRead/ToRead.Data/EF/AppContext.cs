@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using ToRead.Data.Models;
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class AppContext : DbContext
     {

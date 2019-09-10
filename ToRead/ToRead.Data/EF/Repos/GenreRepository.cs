@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System.Linq;
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class GenreRepository : Repository<GenreEntity>, IGenreRepository
     {

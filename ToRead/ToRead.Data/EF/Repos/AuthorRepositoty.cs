@@ -5,7 +5,7 @@ using ToRead.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class AuthorRepository : Repository<AuthorEntity>, IAuthorRepository
     {

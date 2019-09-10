@@ -5,7 +5,7 @@ using System.Text;
 using ToRead.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class GenresBooksRepository : IGenresBooksRepository
     {

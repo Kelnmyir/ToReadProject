@@ -5,7 +5,7 @@ using ToRead.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class DataInitializer
     {

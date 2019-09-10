@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using System.Linq;
 
 
-namespace ToRead.Data
+namespace ToRead.Data.EF
 {
     public class BookRepository : Repository<BookEntity>, IBookRepository
     {
