@@ -43,9 +43,10 @@ namespace ToRead.Services.Testing
             var bookService = new BookService(bookRepo, authorRepo, abRepo, genreRepo, gbRepo, locationRepo, mapper);
             var authorService = new AuthorService(authorRepo, abRepo, bookRepo, mapper);
             var genreService = new GenreService(bookRepo, gbRepo, genreRepo, mapper);
+            var locationService = new LocationService(locationRepo, bookRepo, mapper);
 
-            GenreTester genreTester = new GenreTester(bookService, genreService);
-            genreTester.TestUpdating();
+            LocationTester locationTester = new LocationTester(bookService, locationService);
+            locationTester.TestUpdating();
 
             Console.ReadKey();
         }

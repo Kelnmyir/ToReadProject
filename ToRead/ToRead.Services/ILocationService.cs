@@ -7,9 +7,9 @@ namespace ToRead.Services
 {
     public interface ILocationService
     {
-        ICollection<LocationModel> GetAllAuthors();
+        ICollection<LocationModel> GetAllLocations();
 
-        LocationModel GetAuthor(int id);
+        LocationModel GetLocation(int id);
 
         void Create(LocationModel model);
 
