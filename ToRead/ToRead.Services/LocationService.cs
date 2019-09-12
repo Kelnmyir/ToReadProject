@@ -41,6 +41,7 @@ namespace ToRead.Services
             var location = _locationRepository.GetLocationDetailed(model.Id);
             foreach(var book in location.Books.ToList())
             {
+                Console.WriteLine(book.Name);
                 book.Location = null;
                 _bookRepository.Update(book);
             }

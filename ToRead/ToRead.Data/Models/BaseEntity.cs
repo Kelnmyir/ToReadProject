@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ToRead.Data.Models
 {
-    public abstract class BaseEntity
+    public class BaseEntity
     {
         [Key]
         public int Id { get; set; }

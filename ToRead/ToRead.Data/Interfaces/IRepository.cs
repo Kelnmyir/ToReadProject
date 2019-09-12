@@ -7,7 +7,7 @@ using ToRead.Data.Models;
 
 namespace ToRead.Data
 {
-    public interface IRepository<T> where T: BaseEntity
+    public interface IRepository<T> where T: BaseEntity, new()
     {
         IQueryable<T> Get();
 

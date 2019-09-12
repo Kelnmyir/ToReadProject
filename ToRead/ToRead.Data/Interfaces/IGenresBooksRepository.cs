@@ -10,10 +10,10 @@ namespace ToRead.Data
     {
         IQueryable<GenresBooksEntity> Get();
 
-        void Create(ICollection<GenresBooksEntity> abs);
+        void Create(ICollection<GenresBooksEntity> gbs);
 
-        void Create(GenresBooksEntity ab);
+        void Create(GenresBooksEntity gb);
 
-        void Delete(GenresBooksEntity ab);
+        void Delete(GenresBooksEntity gb);
     }
 }

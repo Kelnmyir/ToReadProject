@@ -8,7 +8,7 @@ using ToRead.Data.Models;
 
 namespace ToRead.Data.EF
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity, new()
     {
         protected readonly AppContext _context;
 

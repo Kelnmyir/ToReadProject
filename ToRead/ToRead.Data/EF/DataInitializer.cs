@@ -124,6 +124,7 @@ namespace ToRead.Data.EF
                 new GenresBooksEntity { Book = books[5], Genre = genres[1]},
                 new GenresBooksEntity { Book = books[6], Genre = genres[1]}
             });
+            _context.SaveChanges();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace ToRead.Services.Testing
             var bookToSave = new BookModel { Name = "Just a Book", Annotation = "Book without related entities" };
             _service.Create(bookToSave);
 
-            bookToSave = new BookModel { Name = "Book Located", Annotation = "Shelf and Place", LocationPlace = "Wardrobe", LocationShelf = 1 };
+            bookToSave = new BookModel { Name = "Book Located", Annotation = "Shelf and Place", LocationPlace = "Wardrobe", LocationShelf = 2 };
             _service.Create(bookToSave);
 
             var anyBook = _service.GetAllBooks().FirstOrDefault();
