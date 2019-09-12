@@ -13,8 +13,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using ToRead.Data;
 using ToRead.Data.EF;
+using ToRead.Data.Adonet;
 using ToRead.Data.Models;
 using ToRead.Services;
+
 
 
 namespace ToRead
@@ -32,10 +34,23 @@ namespace ToRead
         {
             services.AddDbContext<ToRead.Data.EF.AppContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("local")));
 
-            services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IGenreRepository, GenreRepository>();
+            switch (Configuration.GetValue<string>("DataProvider"))
+            {
+                case "EF":
+                    services.AddScoped<IBookRepository, Data.EF.BookRepository>();
+                    services.AddScoped<ILocationRepository, Data.EF.LocationRepository>();
+                    services.AddScoped<IAuthorRepository, Data.EF.AuthorRepository>();
+                    services.AddScoped<IGenreRepository, Data.EF.GenreRepository>();
+                    break;
+                case "ADONET":
+                    services.AddScoped<IBookRepository, Data.Adonet.BookRepository>();
+                    services.AddScoped<ILocationRepository, Data.Adonet.LocationRepository>();
+                    services.AddScoped<IAuthorRepository, Data.Adonet.AuthorRepository>();
+                    services.AddScoped<IGenreRepository, Data.Adonet.GenreRepository>();
+                    break;
+                default:
+                    throw new Exception("Config file is broken");
+            }
 
             services.AddMvc();
 
