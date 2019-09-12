@@ -10,11 +10,12 @@ namespace ToRead.Data.Adonet
 {
     public class LocationRepository : Repository<LocationEntity>, ILocationRepository
     {
+        public LocationRepository(AppContext context) : base(context) { }
+
         public LocationEntity GetLocationDetailed(int id)
         {
             var location = this.GetOne(id);
 
-            _connection.Open();
             string bookQuery= $@"SELECT
                     books.Id AS Id,
                     books.Name AS Name,
@@ -23,8 +24,8 @@ namespace ToRead.Data.Adonet
                 INNER JOIN books
                     ON books.LocationId = locations.Id
                 WHERE locations.Id = {location.Id}";
-            SqlCommand cmd = new SqlCommand(bookQuery, _connection);
-            var bookReader = cmd.ExecuteReader();
+            var bookReader = _context.StartReader(bookQuery);
+
             while (bookReader.Read())
             {
                 var book = new BookEntity();
@@ -39,7 +40,7 @@ namespace ToRead.Data.Adonet
                 location.Books.Add(book);
             }
 
-            _connection.Close();
+            _context.CloseConnection();
             return location;
         }
     }

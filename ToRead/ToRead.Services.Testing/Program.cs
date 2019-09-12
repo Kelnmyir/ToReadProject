@@ -33,28 +33,33 @@ namespace ToRead.Services.Testing
             ILocationRepository locationRepo;
             IAuthorsBooksRepository abRepo;
             IGenresBooksRepository gbRepo;
+
+            string connectionString = ConfigurationManager.AppSettings["connectionString"];
+
             switch (ConfigurationManager.AppSettings["dataProvider"])
             {
                 case "EF":
-                    var context = CreateContext();
+                    var efcontext = CreateContext();
 
-                    var initializer = new DataInitializer(context);
+                    var initializer = new DataInitializer(efcontext);
                     initializer.Initialize();
 
-                    authorRepo = new Data.EF.AuthorRepository(context);
-                    bookRepo = new Data.EF.BookRepository(context);
-                    genreRepo = new Data.EF.GenreRepository(context);
-                    locationRepo = new Data.EF.LocationRepository(context);
-                    abRepo = new Data.EF.AuthorsBooksRepository(context);
-                    gbRepo = new Data.EF.GenresBooksRepository(context);
+                    authorRepo = new Data.EF.AuthorRepository(efcontext);
+                    bookRepo = new Data.EF.BookRepository(efcontext);
+                    genreRepo = new Data.EF.GenreRepository(efcontext);
+                    locationRepo = new Data.EF.LocationRepository(efcontext);
+                    abRepo = new Data.EF.AuthorsBooksRepository(efcontext);
+                    gbRepo = new Data.EF.GenresBooksRepository(efcontext);
                     break;
                 case "ADONET":
-                    authorRepo = new Data.Adonet.AuthorRepository();
-                    bookRepo = new Data.Adonet.BookRepository();
-                    genreRepo = new Data.Adonet.GenreRepository();
-                    locationRepo = new Data.Adonet.LocationRepository();
-                    abRepo = new Data.Adonet.AuthorsBooksRepository();
-                    gbRepo = new Data.Adonet.GenresBooksRepository();
+                    var adonetContext = new Data.Adonet.AppContext(connectionString);
+
+                    authorRepo = new Data.Adonet.AuthorRepository(adonetContext);
+                    bookRepo = new Data.Adonet.BookRepository(adonetContext);
+                    genreRepo = new Data.Adonet.GenreRepository(adonetContext);
+                    locationRepo = new Data.Adonet.LocationRepository(adonetContext);
+                    abRepo = new Data.Adonet.AuthorsBooksRepository(adonetContext);
+                    gbRepo = new Data.Adonet.GenresBooksRepository(adonetContext);
                     break;
                 default:
                     throw new Exception("Config file is broken");

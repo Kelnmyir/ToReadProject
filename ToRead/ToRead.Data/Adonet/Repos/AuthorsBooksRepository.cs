@@ -10,12 +10,11 @@ namespace ToRead.Data.Adonet
 {
     public class AuthorsBooksRepository : IAuthorsBooksRepository
     {
-        protected readonly SqlConnection _connection;
-        protected readonly string _connectionString = "server=(LocalDb)\\MSSQLLocalDB;database=ToRead;User ID=Kelnmyir;Password=solresol;MultipleActiveResultSets=True;Connection Timeout=30;";
+        protected readonly AppContext _context;
 
-        public AuthorsBooksRepository()
+        public AuthorsBooksRepository(AppContext context)
         {
-            _connection = new SqlConnection(_connectionString);
+            _context = context;
         }
         public void Create(ICollection<AuthorsBooksEntity> abs)
         {
@@ -24,18 +23,16 @@ namespace ToRead.Data.Adonet
             {
                 entries += $"({ab.Author.Id}, {ab.Book.Id}), ";
             }
+
             string sql = $@"INSERT INTO authorsBooks (AuthorId, BookId)
                 VALUES {entries.Trim(new char[] { ',', ' ' })}";
-            SqlCommand cmd = new SqlCommand(sql, _connection);
-
-            _connection.Open();
-            int rowsAffected = cmd.ExecuteNonQuery();
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception("AuthorsBooksEntity is not created");
             }
-            _connection.Close();
+            _context.CloseConnection();
         }
 
         public void Create(AuthorsBooksEntity ab)
@@ -47,23 +44,20 @@ namespace ToRead.Data.Adonet
         public void Delete(AuthorsBooksEntity ab)
         {
             string sql = $"DELETE FROM authorsBooks WHERE (AuthorId = {ab.AuthorId}) AND (BookId = {ab.BookId})";
-            SqlCommand cmd = new SqlCommand(sql, _connection);
-            _connection.Open();
-            int rowsAffected = cmd.ExecuteNonQuery();
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception("AuthorsBooksEntity is not deleted");
             }
-            _connection.Close();
+            _context.CloseConnection();
         }
 
         public IQueryable<AuthorsBooksEntity> Get()
         {
             string query = "SELECT * FROM authorsBooks";
-            SqlCommand cmd = new SqlCommand(query, _connection);
-            _connection.Open();
-            var reader = cmd.ExecuteReader();
+            var reader = _context.StartReader(query);
+
             List<AuthorsBooksEntity> result = new List<AuthorsBooksEntity>();
             while (reader.Read())
             {
@@ -75,7 +69,7 @@ namespace ToRead.Data.Adonet
                 result.Add(ab);
             }
 
-            _connection.Close();
+            _context.CloseConnection();
             return result.AsQueryable();
         }
     }

@@ -9,11 +9,11 @@ namespace ToRead.Data.Adonet
 {
     public class BookRepository : Repository<BookEntity>, IBookRepository
     {
+        public BookRepository(AppContext context) : base(context) { }
+
         public BookEntity GetBookDetailed(int id)
         {
             var book = this.GetOne(id);
-
-            _connection.Open();
 
             string locationQuery =$@"SELECT 
                     locations.Id AS Id, 
@@ -23,8 +23,7 @@ namespace ToRead.Data.Adonet
                 INNER JOIN locations 
                     ON books.locationId = locations.Id
                 WHERE books.Id = {book.Id}";
-            SqlCommand cmd = new SqlCommand(locationQuery, _connection);
-            var locationReader = cmd.ExecuteReader();
+            var locationReader = _context.StartReader(locationQuery);
             if (locationReader.HasRows)
             {
                 locationReader.Read();
@@ -41,6 +40,7 @@ namespace ToRead.Data.Adonet
             }
             else
                 book.Location = null;
+            _context.CloseConnection();
 
             string authorsQuery = $@"SELECT 
                     authors.Id AS Id, 
@@ -52,8 +52,7 @@ namespace ToRead.Data.Adonet
 				INNER JOIN authors
 					ON authorsBooks.AuthorId = authors.Id
 				WHERE books.Id = {book.Id}";
-            cmd = new SqlCommand(authorsQuery, _connection);
-            var authorReader = cmd.ExecuteReader();
+            var authorReader = _context.StartReader(authorsQuery);
             while (authorReader.Read())
             {
                 var author = new AuthorEntity();
@@ -67,6 +66,7 @@ namespace ToRead.Data.Adonet
                 }
                 book.AuthorsBooks.Add(new AuthorsBooksEntity {BookId = book.Id, AuthorId = author.Id, Book = book, Author = author });
             }
+            _context.CloseConnection();
 
             string genresQuery = $@"SELECT 
                     genres.Id AS Id, 
@@ -78,8 +78,7 @@ namespace ToRead.Data.Adonet
 				INNER JOIN genres
 					ON genresBooks.GenreId = genres.Id
 				WHERE books.Id = {book.Id}";
-            cmd = new SqlCommand(genresQuery, _connection);
-            var genresReader = cmd.ExecuteReader();
+            var genresReader = _context.StartReader(genresQuery);
             while (genresReader.Read())
             {
                 var genre = new GenreEntity();
@@ -93,8 +92,8 @@ namespace ToRead.Data.Adonet
                 }
                 book.GenresBooks.Add(new GenresBooksEntity { BookId = book.Id, GenreId = genre.Id, Book = book, Genre = genre });
             }
+            _context.CloseConnection();
 
-            _connection.Close();
             return book;
         }
     }

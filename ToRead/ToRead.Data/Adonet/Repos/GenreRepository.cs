@@ -10,11 +10,11 @@ namespace ToRead.Data.Adonet
 {
     public class GenreRepository : Repository<GenreEntity>, IGenreRepository
     {
+        public GenreRepository(AppContext context) : base(context) { }
+
         public GenreEntity GetGenreDetailed(int id)
         {
             var genre = this.GetOne(id);
-
-            _connection.Open();
 
             string bookQuery = $@"SELECT
                     books.Id AS Id,
@@ -26,8 +26,8 @@ namespace ToRead.Data.Adonet
                 INNER JOIN books
                     ON books.Id = genresBooks.BookId
                 WHERE genres.Id = {genre.Id}";
-            SqlCommand cmd = new SqlCommand(bookQuery, _connection);
-            var bookReader = cmd.ExecuteReader();
+            var bookReader = _context.StartReader(bookQuery);
+
             while (bookReader.Read())
             {
                 var book = new BookEntity();
@@ -42,7 +42,7 @@ namespace ToRead.Data.Adonet
                 genre.GenresBooks.Add(new GenresBooksEntity { GenreId = genre.Id, Genre = genre, BookId = book.Id, Book = book });
             }
 
-            _connection.Close();
+            _context.CloseConnection();
             return genre;
         }
     }

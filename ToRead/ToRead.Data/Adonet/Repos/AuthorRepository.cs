@@ -10,11 +10,11 @@ namespace ToRead.Data.Adonet
 {
     public class AuthorRepository : Repository<AuthorEntity>, IAuthorRepository
     {
+        public AuthorRepository(AppContext context) : base(context) { }
+
         public AuthorEntity GetAuthorDetailed(int id)
         {
             var author = this.GetOne(id);
-
-            _connection.Open();
 
             string bookQuery = $@"SELECT
                     books.Id AS Id,
@@ -26,8 +26,8 @@ namespace ToRead.Data.Adonet
                 INNER JOIN books
                     ON books.Id = authorsBooks.BookId
                 WHERE authors.Id = {author.Id}";
-            SqlCommand cmd = new SqlCommand(bookQuery, _connection);
-            var bookReader = cmd.ExecuteReader();
+            var bookReader = _context.StartReader(bookQuery);
+
             while (bookReader.Read())
             {
                 var book = new BookEntity();
@@ -42,7 +42,7 @@ namespace ToRead.Data.Adonet
                 author.AuthorsBooks.Add(new AuthorsBooksEntity { AuthorId = author.Id, Author = author, BookId = book.Id, Book = book });
             }
 
-            _connection.Close();
+            _context.CloseConnection();
             return author;
         }
     }

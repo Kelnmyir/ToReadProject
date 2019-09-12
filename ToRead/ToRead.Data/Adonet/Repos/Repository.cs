@@ -20,19 +20,17 @@ namespace ToRead.Data.Adonet
             {typeof(GenresBooksEntity), "genresBooks" },
             {typeof(LocationEntity), "locations" }
         };
-        protected readonly SqlConnection _connection;
-        protected readonly string _connectionString = "server=(LocalDb)\\MSSQLLocalDB;database=ToRead;User ID=Kelnmyir;Password=solresol;MultipleActiveResultSets=True;Connection Timeout=30;";
+        protected readonly AppContext _context;
 
-        public Repository()
+        public Repository(AppContext context)
         {
-            _connection = new SqlConnection(_connectionString);
+            _context = context;
         }
 
         public void Create(T obj)
         {
             string columns = "";
             string values = "";
-
             foreach (var property in typeof(T).GetProperties())
             {
                 if ((property.PropertyType.IsPrimitive || (property.PropertyType == typeof(string)))
@@ -44,47 +42,38 @@ namespace ToRead.Data.Adonet
             }
             columns = columns.Trim(new char[] { ',', ' ' });
             values = values.Trim(new char[] { ',', ' ' });
+
             string sql = $@"INSERT INTO {_tableNames[typeof(T)]} ({columns})
                 VALUES ({values})";
-
-            _connection.Open();
-            var cmd = new SqlCommand(sql, _connection);
-
-            int rowsAffected = cmd.ExecuteNonQuery();
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception($"{typeof(T).Name} is not created");
             }
+            _context.CloseConnection();
 
             sql = "SELECT SCOPE_IDENTITY() AS Id";
-            cmd = new SqlCommand(sql, _connection);
-            obj.Id = Decimal.ToInt32((decimal)cmd.ExecuteScalar());
-
-            _connection.Close();
+            obj.Id = _context.StartScalar(sql);
+            _context.CloseConnection();
         }
 
         public void Delete(T obj)
         {
             string sql = $@"DELETE FROM {_tableNames[typeof(T)]} WHERE Id = {obj.Id}";
-            _connection.Open();
-            var cmd = new SqlCommand(sql, _connection);
-            int rowsAffected = cmd.ExecuteNonQuery();
-
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception($"{typeof(T).Name} is not created");
             }
-            _connection.Close();
+            _context.CloseConnection();
         }
 
         public IQueryable<T> Get()
         {
-            _connection.Open();
             string query = $"SELECT * FROM {_tableNames[typeof(T)]}";
-            var cmd = new SqlCommand(query, _connection);
-            var reader = cmd.ExecuteReader();
+            var reader = _context.StartReader(query);
 
             var result = new List<T>();
             while (reader.Read())
@@ -100,16 +89,15 @@ namespace ToRead.Data.Adonet
                 }
                 result.Add(entity);
             }
-            _connection.Close();
+
+            _context.CloseConnection();
             return result.AsQueryable();
         }
 
         public T GetOne(int id)
         {
-            _connection.Open();
             string query = $"SELECT * FROM {_tableNames[typeof(T)]} WHERE Id = {id}";
-            var cmd = new SqlCommand(query, _connection);
-            var reader = cmd.ExecuteReader();
+            var reader = _context.StartReader(query);
 
             T result = new T();
             if (reader.HasRows)
@@ -126,11 +114,11 @@ namespace ToRead.Data.Adonet
             }
             else
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw (new Exception("Entity not found"));
             }
 
-            _connection.Close();
+            _context.CloseConnection();
             return result;
         }
 
@@ -149,20 +137,16 @@ namespace ToRead.Data.Adonet
                     columnsAndValues += $@"{property.Name}Id = NULL, ";
                 }
             }
-            Console.WriteLine(columnsAndValues);
             columnsAndValues = columnsAndValues.Trim(new char[] { ',',' '});
+
             string sql = $@"UPDATE {_tableNames[typeof(T)]} SET {columnsAndValues} WHERE Id = {obj.Id}";
-
-            _connection.Open();
-            var cmd = new SqlCommand(sql, _connection);
-            int rowsAffected = cmd.ExecuteNonQuery();
-
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception($"{typeof(T).Name} is not created");
             }
-            _connection.Close();
+            _context.CloseConnection();
         }
     }
 }

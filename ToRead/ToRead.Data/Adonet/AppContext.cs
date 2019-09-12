@@ -16,5 +16,32 @@ namespace ToRead.Data.Adonet
         {
             _sqlConnection = new SqlConnection(connectionString);
         }
+
+        public SqlDataReader StartReader(string query)
+        {
+            _sqlConnection.Open();
+            SqlCommand cmd = new SqlCommand(query, _sqlConnection);
+            return cmd.ExecuteReader();
+        }
+
+        public int StartNonQuery(string sql)
+        {
+            _sqlConnection.Open();
+            SqlCommand cmd = new SqlCommand(sql, _sqlConnection);
+            return cmd.ExecuteNonQuery();
+        }
+
+        public int StartScalar(string sql)
+        {
+            _sqlConnection.Open();
+            SqlCommand cmd = new SqlCommand(sql, _sqlConnection);
+            return Decimal.ToInt32((decimal)cmd.ExecuteScalar());
+        }
+
+        public void CloseConnection()
+        {
+            if (_sqlConnection.State!=ConnectionState.Closed)
+                _sqlConnection.Close();
+        }
     }
 }

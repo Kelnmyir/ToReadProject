@@ -10,12 +10,11 @@ namespace ToRead.Data.Adonet
 {
     public class GenresBooksRepository : IGenresBooksRepository
     {
-        protected readonly SqlConnection _connection;
-        protected readonly string _connectionString = "server=(LocalDb)\\MSSQLLocalDB;database=ToRead;User ID=Kelnmyir;Password=solresol;MultipleActiveResultSets=True;Connection Timeout=30;";
+        private readonly AppContext _context;
 
-        public GenresBooksRepository()
+        public GenresBooksRepository(AppContext context)
         {
-            _connection = new SqlConnection(_connectionString);
+            _context = context;
         }
 
         public void Create(ICollection<GenresBooksEntity> gbs)
@@ -25,18 +24,16 @@ namespace ToRead.Data.Adonet
             {
                 entries += $"({gb.Genre.Id}, {gb.Book.Id}), ";
             }
+
             string sql = $@"INSERT INTO genresBooks (GenreId, BookId)
                 VALUES {entries.Trim(new char[] { ',', ' ' })}";
-            SqlCommand cmd = new SqlCommand(sql, _connection);
-
-            _connection.Open();
-            int rowsAffected = cmd.ExecuteNonQuery();
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception("GenresBooksEntity is not created");
             }
-            _connection.Close();
+            _context.CloseConnection();
         }
 
         public void Create(GenresBooksEntity gb)
@@ -48,23 +45,19 @@ namespace ToRead.Data.Adonet
         public void Delete(GenresBooksEntity gb)
         {
             string sql = $"DELETE FROM genresBooks WHERE (GenreId = {gb.GenreId}) AND (BookId = {gb.BookId})";
-            SqlCommand cmd = new SqlCommand(sql, _connection);
-            _connection.Open();
-            int rowsAffected = cmd.ExecuteNonQuery();
+            int rowsAffected = _context.StartNonQuery(sql);
             if (rowsAffected <= 0)
             {
-                _connection.Close();
+                _context.CloseConnection();
                 throw new Exception("GenresBooksEntity is not deleted");
             }
-            _connection.Close();
+            _context.CloseConnection();
         }
 
         public IQueryable<GenresBooksEntity> Get()
         {
             string query = "SELECT * FROM genresBooks";
-            SqlCommand cmd = new SqlCommand(query, _connection);
-            _connection.Open();
-            var reader = cmd.ExecuteReader();
+            var reader = _context.StartReader(query);
             List<GenresBooksEntity> result = new List<GenresBooksEntity>();
             while (reader.Read())
             {
@@ -76,7 +69,7 @@ namespace ToRead.Data.Adonet
                 result.Add(gb);
             }
 
-            _connection.Close();
+            _context.CloseConnection();
             return result.AsQueryable();
         }
     }
