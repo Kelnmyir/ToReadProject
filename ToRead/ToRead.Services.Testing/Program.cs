@@ -41,7 +41,7 @@ namespace ToRead.Services.Testing
                 case "EF":
                     var efcontext = CreateContext();
 
-                    var initializer = new DataInitializer(efcontext);
+                    var initializer = new Data.EF.DataInitializer(efcontext);
                     initializer.Initialize();
 
                     authorRepo = new Data.EF.AuthorRepository(efcontext);
@@ -52,7 +52,10 @@ namespace ToRead.Services.Testing
                     gbRepo = new Data.EF.GenresBooksRepository(efcontext);
                     break;
                 case "ADONET":
-                    var adonetContext = new Data.Adonet.AppContext(connectionString);
+                    var adonetContext = new Data.Adonet.AppContext("server=(LocalDb)\\MSSQLLocalDB;database=ToRead;User ID=Kelnmyir;Password=solresol;MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=30;");
+
+                    var adonetInitialzer = new Data.Adonet.DataInitializer(adonetContext);
+                    adonetInitialzer.Initialize();
 
                     authorRepo = new Data.Adonet.AuthorRepository(adonetContext);
                     bookRepo = new Data.Adonet.BookRepository(adonetContext);
@@ -74,8 +77,8 @@ namespace ToRead.Services.Testing
             var genreService = new GenreService(bookRepo, gbRepo, genreRepo, mapper);
             var locationService = new LocationService(locationRepo, bookRepo, mapper);
 
-            LocationTester tester = new LocationTester(bookService, locationService);
-            tester.TestReading();
+            BookTester tester = new BookTester(bookService);
+            tester.TestUpdating();
 
             Console.ReadKey();
         }

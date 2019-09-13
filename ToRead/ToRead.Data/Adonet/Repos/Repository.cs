@@ -39,6 +39,19 @@ namespace ToRead.Data.Adonet
                     columns += property.Name + ", ";
                     values +=$"'{property.GetValue(obj)}', ";
                 }
+                if (property.PropertyType.IsSubclassOf(typeof(BaseEntity)))
+                {
+                    columns += $"{property.Name}Id, ";
+                    if (property.GetValue(obj) == null)
+                    {
+                        values += $"NULL, ";
+                    }
+                    else
+                    {
+                        BaseEntity relatedEntity = (BaseEntity)property.GetValue(obj);
+                        values += $"{relatedEntity.Id}, ";
+                    }
+                }
             }
             columns = columns.Trim(new char[] { ',', ' ' });
             values = values.Trim(new char[] { ',', ' ' });
@@ -51,10 +64,9 @@ namespace ToRead.Data.Adonet
                 _context.CloseConnection();
                 throw new Exception($"{typeof(T).Name} is not created");
             }
-            _context.CloseConnection();
 
             sql = "SELECT SCOPE_IDENTITY() AS Id";
-            obj.Id = _context.StartScalar(sql);
+            obj.Id = _context.ExecuteScalar(sql);
             _context.CloseConnection();
         }
 
@@ -132,9 +144,12 @@ namespace ToRead.Data.Adonet
                 {
                     columnsAndValues += $@"{property.Name} = '{property.GetValue(obj)}', ";
                 }
-                if ((property.GetValue(obj) == null) && property.GetType().IsSubclassOf(typeof(BaseEntity)))
+                if (property.GetType().IsSubclassOf(typeof(BaseEntity)))
                 {
-                    columnsAndValues += $@"{property.Name}Id = NULL, ";
+                    if (property.GetValue(obj) == null)
+                        columnsAndValues += $@"{property.Name}Id = NULL, ";
+                    else
+                        columnsAndValues += $@"{property.Name}Id = {obj.Id}, ";
                 }
             }
             columnsAndValues = columnsAndValues.Trim(new char[] { ',',' '});

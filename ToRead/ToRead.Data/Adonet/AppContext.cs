@@ -31,9 +31,8 @@ namespace ToRead.Data.Adonet
             return cmd.ExecuteNonQuery();
         }
 
-        public int StartScalar(string sql)
+        public int ExecuteScalar(string sql)
         {
-            _sqlConnection.Open();
             SqlCommand cmd = new SqlCommand(sql, _sqlConnection);
             return Decimal.ToInt32((decimal)cmd.ExecuteScalar());
         }

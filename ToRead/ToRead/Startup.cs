@@ -32,17 +32,18 @@ namespace ToRead
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ToRead.Data.EF.AppContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("local")));
 
             switch (Configuration.GetValue<string>("DataProvider"))
             {
                 case "EF":
+                    services.AddDbContext<ToRead.Data.EF.AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("local")));
                     services.AddScoped<IBookRepository, Data.EF.BookRepository>();
                     services.AddScoped<ILocationRepository, Data.EF.LocationRepository>();
                     services.AddScoped<IAuthorRepository, Data.EF.AuthorRepository>();
                     services.AddScoped<IGenreRepository, Data.EF.GenreRepository>();
                     break;
                 case "ADONET":
+                    services.AddScoped<Data.Adonet.AppContext>(sp=>new Data.Adonet.AppContext(Configuration.GetConnectionString("local")));
                     services.AddScoped<IBookRepository, Data.Adonet.BookRepository>();
                     services.AddScoped<ILocationRepository, Data.Adonet.LocationRepository>();
                     services.AddScoped<IAuthorRepository, Data.Adonet.AuthorRepository>();
